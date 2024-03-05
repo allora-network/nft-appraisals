@@ -1,0 +1,69 @@
+version: "3.8"
+
+services:
+
+  worker1:
+    # 12D3KooWH43dbK5Wg5u6SLTb4nTsaF9cRJnQEcSVR4KxmQeeR4NT
+    command: >
+      - upshot-node
+      - --role=worker
+      - --peer-db=/data/peerdb
+      - --function-db=/data/function-db
+      - --runtime-path=/app/runtime
+      - --runtime-cli=bls-runtime
+      - --workspace=/data/workspace
+      - --private-key=/data/keys/worker1/priv.bin
+      - --log-level=debug
+      - --boot-nodes=/ip4/172.21.0.100/tcp/9010/p2p/12D3KooWFVXiBBD9XrQQ5X5GGGZeKM8MBEvk1gu3io2K1XLRX8MA
+      - --allora-chain-topic-id=1
+      - --topic=1
+    build: .
+    volumes:
+      - ./data-worker:/data
+    working_dir: /data
+    environment:
+      - HOME=/app
+    env_file:
+      - .env
+    depends_on:
+      - head1
+    networks:
+      b7s-local:
+        aliases:
+          - worker1
+        ipv4_address: 172.21.0.5
+
+  head1:
+    # 12D3KooWFVXiBBD9XrQQ5X5GGGZeKM8MBEvk1gu3io2K1XLRX8MA
+    command: >
+      - upshot-node
+      - --role=head
+      - --peer-db=/data/peerdb
+      - --function-db=/data/function-db
+      - --runtime-path=/app/runtime
+      - --runtime-cli=bls-runtime
+      - --workspace=/data/workspace
+      - --private-key=/data/keys/head1/priv.bin
+      - --log-level=debug
+      - --port=9010
+      - --rest-api=:6000
+    image: 696230526504.dkr.ecr.us-east-1.amazonaws.com/allora-inference-base-head:dev-latest
+    ports:
+      - "6000:6000"
+    volumes:
+      - ./data-head:/data
+    working_dir: /data
+    environment:
+      - HOME=/data
+    networks:
+      b7s-local:
+        aliases:
+          - head1
+        ipv4_address: 172.21.0.100
+
+networks:
+  b7s-local:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.21.0.0/24

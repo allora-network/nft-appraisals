@@ -1,0 +1,9 @@
+.DS_Store
+.cache
+__pycache__
+.venv
+.env
+keys
+data
+data-worker
+data-head

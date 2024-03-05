@@ -1,0 +1,15 @@
+name = "nft-appraisals-inference"
+version = "1.0.0"
+
+[deployment]
+nodes = 1
+
+[build]
+dir = "build"
+entry = "nft-appraisals-inference_debug.wasm"
+command = "npm run build:debug"
+
+[build_release]
+dir = "build"
+entry = "nft-appraisals-inference.wasm"
+command = "npm run build:release"
