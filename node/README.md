@@ -1,1 +1,0 @@
-# nft-appraisals-topic
