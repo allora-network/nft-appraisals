@@ -2,8 +2,7 @@ version: "3.8"
 
 services:
 
-  worker1:
-    # 12D3KooWH43dbK5Wg5u6SLTb4nTsaF9cRJnQEcSVR4KxmQeeR4NT
+  worker:
     command: >
       - upshot-node
       - --role=worker
@@ -12,29 +11,28 @@ services:
       - --runtime-path=/app/runtime
       - --runtime-cli=bls-runtime
       - --workspace=/data/workspace
-      - --private-key=/data/keys/worker1/priv.bin
+      - --private-key=/data/keys/priv.bin
       - --log-level=debug
-      - --boot-nodes=/ip4/172.21.0.100/tcp/9010/p2p/12D3KooWFVXiBBD9XrQQ5X5GGGZeKM8MBEvk1gu3io2K1XLRX8MA
+      - --boot-nodes=/ip4/172.21.0.100/tcp/9010/p2p/head-id
       - --allora-chain-topic-id=1
       - --topic=1
     build: .
     volumes:
-      - ./data-worker:/data
+      - ./worker-data:/data
     working_dir: /data
     environment:
       - HOME=/app
     env_file:
       - .env
     depends_on:
-      - head1
+      - head
     networks:
       b7s-local:
         aliases:
-          - worker1
+          - worker
         ipv4_address: 172.21.0.5
 
-  head1:
-    # 12D3KooWFVXiBBD9XrQQ5X5GGGZeKM8MBEvk1gu3io2K1XLRX8MA
+  head:
     command: >
       - upshot-node
       - --role=head
@@ -43,7 +41,7 @@ services:
       - --runtime-path=/app/runtime
       - --runtime-cli=bls-runtime
       - --workspace=/data/workspace
-      - --private-key=/data/keys/head1/priv.bin
+      - --private-key=/data/keys/priv.bin
       - --log-level=debug
       - --port=9010
       - --rest-api=:6000
@@ -51,14 +49,14 @@ services:
     ports:
       - "6000:6000"
     volumes:
-      - ./data-head:/data
+      - ./head-data:/data
     working_dir: /data
     environment:
       - HOME=/data
     networks:
       b7s-local:
         aliases:
-          - head1
+          - head
         ipv4_address: 172.21.0.100
 
 networks:
