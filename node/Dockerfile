@@ -1,4 +1,4 @@
-FROM --platform=linux/amd64 696230526504.dkr.ecr.us-east-1.amazonaws.com/allora-inference-base:latest
+FROM --platform=linux/amd64 alloranetwork/allora-inference-base:latest
 
 USER root
 RUN chown -R $GROUP_ID:$USER_ID /app
