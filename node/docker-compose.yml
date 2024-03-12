@@ -47,7 +47,7 @@ services:
       - --log-level=debug
       - --port=9010
       - --rest-api=:6000
-    image: 696230526504.dkr.ecr.us-east-1.amazonaws.com/allora-inference-base-head:dev-latest
+    image: alloranetwork/allora-inference-base-head:latest
     ports:
       - "6000:6000"
     volumes:
