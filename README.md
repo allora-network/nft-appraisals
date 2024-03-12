@@ -20,12 +20,12 @@ There is a docker-compose.yml provided that sets up one head node and one worker
 
 ## Dependencies
 - Have an available image of the `allora-inference-base` , and reference it as a base on the `FROM` of the `Dockerfile`.
-- Create a set of keys in the `keys` directory for your head and worker, and use them in the head and worker configuration(volume mapping already provided in `docker-compose.yml` file). If no keys are specified in the volumes, new keys are created. However, the worker will need to specify the `peer_id` of the head for defining it as a `BOOT_NODES`. You can bring head up first, get the key from the container, then use it in the `BOOT_NODES`. More info in the [b7s-docker-compose](https://github.com/blocklessnetwork/b7s-docker-compose/tree/main) repo.
+- Create a set of keys in the `keys` directory for your head and worker, and use them in the head and worker configuration(volume mapping already provided in `docker-compose.yml` file). If no keys are specified in the volumes, new keys are created. However, the worker will need to specify the `peer_id` of the head for defining it as a `BOOT_NODES`. You can bring head up first, get the key from the container, then use it in the `BOOT_NODES`. For more information, see [how to generate keys](https://github.com/allora-network/basic-coin-prediction-node#docker-compose-setup).
 - Provide a valid `UPSHOT_API_TOKEN` env var inside the `node/.env` file.
 
 ## Run 
 
-Once this is set up, run `docker compose up head1 worker1`
+Once this is set up, run `cd node && docker compose up`
 
 
 Once both nodes are up, a function can be tested by hitting:
@@ -47,16 +47,37 @@ curl --location 'http://localhost:6000/api/v1/functions/execute' \
             {
                 "name": "ALLORA_ARG_PARAMS",
                 "value": "0x42069abfe407c60cf4ae4112bedead391dba1cdb/2921"
-            },
-            {                              
-                "name": "TOPIC_ID",
-                "value": "1"
             }
         ],
         "number_of_nodes": -1,
         "timeout": 2
     }
 }'
+```
+The response will look like:
+```
+{
+  "code": "200",
+  "request_id": "0a6c4c9b-e55d-4ef5-a95f-b23d8747fd03",
+  "results": [
+    {
+      "result": {
+        "stdout": "{\"value\": \"432940000000000000\"}\n\n",
+        "stderr": "",
+        "exit_code": 0
+      },
+      "peers": [
+        "12D3KooWEdenoKzrpCVD5D98Qt6vxgFdEDHLRGSKnnCXR49PQsbp"
+      ],
+      "frequency": 100
+    }
+  ],
+  "cluster": {
+    "peers": [
+      "12D3KooWEdenoKzrpCVD5D98Qt6vxgFdEDHLRGSKnnCXR49PQsbp"
+    ]
+  }
+}
 ```
 
 ## Connecting to the Allora network
