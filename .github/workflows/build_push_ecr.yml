@@ -3,9 +3,8 @@ name: Build and Push docker image to Docker Hub
 
 on:
   push:
-    # todo: remove
-    branch:
-      - feat/gh-workflow-for-dh-push
+    branches:
+      - '**'
     tags:
       - 'v*'
       - dev-latest
