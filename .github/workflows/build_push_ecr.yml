@@ -3,8 +3,6 @@ name: Build and Push docker image to Docker Hub
 
 on:
   push:
-    branches:
-      - '**'
     tags:
       - 'v*'
       - dev-latest

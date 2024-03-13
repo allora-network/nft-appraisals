@@ -3,8 +3,8 @@ name: Build and Push docker image to Docker Hub
 
 on:
   push:
-    branch:
-      - main
+    branches:
+      - '**'
     tags:
       - 'v*'
       - dev-latest
@@ -36,7 +36,7 @@ jobs:
           #! Due to we trigger on push.tags GITHUB_REF - is the tag name
           GIT_TAG="$(echo $GITHUB_REF| sed 's#refs/tags/##')"
 
-          IMAGE_TAG="${GITHUB_SHA:0:8}"
+          IMAGE_TAG="latest"
           EXTRA_IMAGE_TAGS=$GIT_TAG
 
           #! Add latest tag only if on named releases tag='v*'
