@@ -7,3 +7,5 @@ keys
 data
 data-worker
 data-head
+/node/head-data
+/node/worker-data
