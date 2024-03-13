@@ -21,7 +21,7 @@ There is a docker-compose.yml provided that sets up one head node and one worker
 ## Dependencies
 - Have an available image of the `allora-inference-base` , and reference it as a base on the `FROM` of the `Dockerfile`.
 - Create a set of keys in the `keys` directory for your head and worker, and use them in the head and worker configuration(volume mapping already provided in `docker-compose.yml` file). If no keys are specified in the volumes, new keys are created. However, the worker will need to specify the `peer_id` of the head for defining it as a `BOOT_NODES`. You can bring head up first, get the key from the container, then use it in the `BOOT_NODES`. For more information, see [how to generate keys](https://github.com/allora-network/basic-coin-prediction-node#docker-compose-setup).
-- Provide a valid `UPSHOT_API_TOKEN` env var inside the `node/.env` file.
+- Provide a valid `UPSHOT_API_TOKEN` env var inside the `node/.env` file. You can [create one here](https://developer.upshot.xyz/).
 
 ## Run 
 
